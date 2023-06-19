@@ -1,37 +1,35 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PusulaCCProject.WebUI.Models;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace PusulaCCProject.WebUI.Controllers
 {
+	[Authorize]
 	public class HomeController : Controller
 	{
-		private readonly ILogger<HomeController> _logger;
-
-		public HomeController(ILogger<HomeController> logger)
-		{
-			_logger = logger;
-		}
-
+		
 		public IActionResult Index()
 		{
-			return View();
+			var client = new HttpClient();
+
+			var contentType = new MediaTypeWithQualityHeaderValue("application/json");
+			client.DefaultRequestHeaders.Accept.Add(contentType);
+			client.DefaultRequestHeaders.Add("X-Access-Token", HttpContext.Session.GetString("token").ToString());
+			
+
+			var request = client.GetAsync("https://process.pusulacc.com.tr/testapi/api/Fish/GetFishes").Result;
+			var response = request.Content.ReadAsStringAsync().Result;
+
+			var viewModel = JsonConvert.DeserializeObject<List<Fishes>>(response);
+
+			return View(viewModel);
 		}
 
-		public IActionResult Privacy()
-		{
-			return View();
-		}
-
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-		public IActionResult Error()
-		{
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-		}
+		
 	}
 }
