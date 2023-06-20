@@ -13,12 +13,12 @@
 <body>
 
     <div class="container">
-
+            <br />
         <div class="row">
+            <h2 align="center">FİSH STORE|GİRİŞ PANELİ</h2>
+            <div class="col" style="padding-top:100px;">
 
-            <div class="col">
-
-                <form>
+                <form align="center">
                     <div class="row mb-3">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Kullanıcı Adı</label>
                         <div class="col-sm-10">
@@ -31,9 +31,8 @@
                             <input type="password" class="form-control" id="txtPassword">
                         </div>
                     </div>
-
-
                     <button id="btnLogin" type="button" class="btn btn-primary">Giriş Yap</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#divRegisterForm">Kayıt Ol</button>
                 </form>
 
             </div>
@@ -42,7 +41,38 @@
 
     </div>
 
-    
+    <div class="modal fade" id="divRegisterForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Müşteri Kayıt Formu</h1>
+                </div>
+                <div class="modal-body">
+
+                    <form>
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <label for="exampleInputText">Kullanıcı Adı</label>
+                                <input type="text" class="form-control" id="txtUsernameRegister" placeholder="Kullanıcı Adı">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Şifre</label>
+                                <input type="text" class="form-control" id="txtPasswordRegister" placeholder="Şifre">
+                            </div>
+                            
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">İptal</button>
+                    <button id="btnRegister" type="button" class="btn btn-success">Kayıt Ol</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     
     <script src="~/bootstrap-5.3.0-dist/js/bootstrap.bundle.min.js"></script>   
@@ -51,7 +81,6 @@
     
     <script src="~/package/dist/sweetalert2.all.min.js"></script>    
     <script src="~/package/dist/sweetalert2.min.js"></script>
-
 
 
     <script>
@@ -90,13 +119,60 @@
                     }
                 });
             });
+
+
+            $("#btnRegister").click(function (){
+
+                var formData =
+                {
+                    username: $("#txtUsernameRegister").val(),
+                    password: $("#txtPasswordRegister").val()
+                };
+                
+                $.ajax({
+                    url: "/Authentication/Register",
+                    method: "post",
+                    datatype: "json",
+                    data: { loginRegisterModel : formData },
+                    success: function (response) {
+                        if (response.isSuccess) {
+                            Swal.fire({
+                                title: 'İşlem Başarılı',
+                                html: response.message,
+                                icon: 'success',
+                                showCancelButton: false,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Tamam'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+
+                                    $("#divRegisterForm").modal("hide");
+                                    window.location.reload();
+
+                                }
+                            });
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'İşlem Başarısız',
+                                html: response.message
+                            });
+                        }
+                    }
+                });
+            
+            
+            
+            
+            });
+
+
         });
-
-
 
     </script>
 
 
-   
 </body>
 </html>
