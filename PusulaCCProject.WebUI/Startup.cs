@@ -29,10 +29,14 @@ namespace PusulaCCProject.WebUI
 
             services.AddControllersWithViews();
             services.AddSession();
-            //services.AddAuthentication("X-Access-Token")
-            //.AddScheme<AuthenticationSchemeOptions, MyAuthenticationHandler>("X-Access-Token", options => { });
+            services.AddAuthentication("ApiKeyAuth")
+            .AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>("ApiKeyAuth", null);
+            services.AddAuthorization();            
             
-            
+           
+
+
+
 
 
         }
@@ -55,8 +59,9 @@ namespace PusulaCCProject.WebUI
 
             app.UseRouting();
             app.UseSession();
-            
             app.UseAuthentication();
+            app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {
