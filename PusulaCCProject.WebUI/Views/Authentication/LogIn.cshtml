@@ -1,0 +1,102 @@
+﻿@{
+    Layout = null;
+}
+
+<html>
+<head>      
+    <link href="~/bootstrap-5.3.0-dist/css/bootstrap.min.css" rel="stylesheet" />    
+    <link href="~/bootstrap-5.3.0-dist/css/bootstrap.rtl.min.css" rel="stylesheet" /> 
+    
+    <link href="~/package/dist/sweetalert2.min.css" rel="stylesheet" />
+
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col">
+
+                <form>
+                    <div class="row mb-3">
+                        <label for="inputEmail3" class="col-sm-2 col-form-label">Kullanıcı Adı</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="txtUsername">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">Şifre</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="txtPassword">
+                        </div>
+                    </div>
+
+
+                    <button id="btnLogin" type="button" class="btn btn-primary">Giriş Yap</button>
+                </form>
+
+            </div>
+
+        </div>        
+
+    </div>
+
+    
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    
+    <script src="~/bootstrap-5.3.0-dist/js/bootstrap.bundle.min.js"></script>   
+    <script src="~/bootstrap-5.3.0-dist/js/bootstrap.esm.min.js"></script>    
+    <script src="~/bootstrap-5.3.0-dist/js/bootstrap.min.js"></script>
+    
+    <script src="~/package/dist/sweetalert2.all.min.js"></script>    
+    <script src="~/package/dist/sweetalert2.min.js"></script>
+
+
+
+    <script>
+
+        $(document).ready(function ()
+        {
+
+            $("#btnLogin").click(function () 
+            {
+
+                var formData = 
+                {
+                    username : $("#txtUsername").val(),
+                    password: $("#txtPassword").val()
+                };
+
+                $.ajax({
+                    url:"/Authentication/LogIn",
+                    method : "post",
+                    datatype : "json",
+                    data: { loginModel : formData},
+                    success : function (response)
+                    {
+                        if(response.isSuccess)
+                        {
+                            window.location.href="/Home/Index";
+                        }
+                        else
+                        {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'İşlem Başarısız',
+                                html: response.message
+                            });
+                        }
+                    }
+                });
+            });
+        });
+
+
+
+    </script>
+
+
+   
+</body>
+</html>

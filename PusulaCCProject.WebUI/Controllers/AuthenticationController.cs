@@ -38,12 +38,13 @@ namespace PusulaCCProject.WebUI.Controllers
 
                 if(responseModel.state == true)
                 {
-                    string stringAccessToken = JsonConvert.SerializeObject(responseModel.LoginResponseModel.accessToken);
+                    string stringAccessToken = JsonConvert.SerializeObject(responseModel.response.accessToken);
                     HttpContext.Session.SetString("token", stringAccessToken);
                     return Json(new { isSuccess = true });
                 }
                 else                
                     return Json(new { isSuccess = false, Message = "Kullanıcı Bulunamadı!" });
+
                       
 
             }

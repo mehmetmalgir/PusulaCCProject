@@ -4,7 +4,7 @@
     {
         public bool state { get; set; }
         public string message { get; set; }
-        public LoginResponseModel LoginResponseModel { get; set; }
+        public LoginResponseModel response { get; set; }
 
     }
 }

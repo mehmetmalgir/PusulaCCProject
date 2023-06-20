@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Server.IIS;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,9 +26,14 @@ namespace PusulaCCProject.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddControllersWithViews();
-            services.AddAuthentication("X-Access-Token")
-            .AddScheme<AuthenticationSchemeOptions, MyAuthenticationHandler>("X-Access-Token", options => { });
+            services.AddSession();
+            //services.AddAuthentication("X-Access-Token")
+            //.AddScheme<AuthenticationSchemeOptions, MyAuthenticationHandler>("X-Access-Token", options => { });
+            
+            
+
 
         }
 
@@ -48,14 +54,15 @@ namespace PusulaCCProject.WebUI
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthorization();
+            app.UseSession();
+            
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Authentication}/{action=LogIn}/{id?}");
             });
         }
     }

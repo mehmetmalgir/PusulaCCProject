@@ -12,6 +12,7 @@ namespace PusulaCCProject.WebUI.Controllers
 	[Authorize]
 	public class HomeController : Controller
 	{
+
 		
 		public IActionResult Index()
 		{
