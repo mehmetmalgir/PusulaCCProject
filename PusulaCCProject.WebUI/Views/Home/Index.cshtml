@@ -46,7 +46,7 @@
                                  <tr>
                                      <td>@item.name</td>
                                      <td>@item.buyPrice</td>
-                                     <td><button value="@item.id" id ="btnBuy" type="button" class="btn btn-primary btnBuy">Satın Al!</button></td>
+                                     <td><button value="@item.id" type="button" class="btn btn-primary btnBuy">Satın Al!</button></td>
                                  </tr>
 
                              }
@@ -75,7 +75,7 @@
                 $(".btnBuy").click(function () {
 
 
-                    var id = $(".btnBuy").val();
+                    var id = $(this).val();
 
                     $.ajax({
                         url: "/Order/AddOrder",
