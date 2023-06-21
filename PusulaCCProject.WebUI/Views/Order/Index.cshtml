@@ -1,0 +1,60 @@
+﻿@{
+    Layout = null;
+}
+@model List<OrderVirtual>
+
+<html>
+    <head>
+             <link href="~/bootstrap-5.3.0-dist/css/bootstrap.min.css" rel="stylesheet" />
+             <link href="~/bootstrap-5.3.0-dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
+             <link href="~/bootstrap-5.3.0-dist/css/bootstrap.rtl.css" rel="stylesheet" />
+             <link href="~/bootstrap-5.3.0-dist/css/bootstrap.css" rel="stylesheet" />
+    </head>
+    <body>
+
+           <div class="container">
+               <br />
+               <div class="row">
+                   <h2 align="center">SİPARİŞLERİM</h2>
+
+                   <div class="col" style="padding-top:100px;">
+
+                       <table id="fishTbl" class="table table-hover">
+                           <thead>
+                               <tr>
+                                   <th>Ürün Adı</th>
+                                   <th>Ürün Fiyatı</th>
+                                   <th>Sipariş Numarası</th>
+                                   <th>Sipariş Tarihi - Saati</th>
+                               </tr>
+                           </thead>
+                           <tbody>
+
+                               @foreach (var item in Model)
+                               {
+
+                                   <tr>
+                                       <td>@item.fish.name</td>
+                                       <td>@item.fish.buyPrice</td>
+                                       <td>@item.orderId</td>
+                                       <td>@item.orderDate</td>
+                                   </tr>
+
+                               }
+
+                           </tbody>
+
+                       </table>
+
+
+                   </div>
+
+               </div>
+
+           </div>
+
+
+
+
+    </body>
+</html>

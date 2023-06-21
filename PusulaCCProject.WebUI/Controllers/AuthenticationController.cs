@@ -41,7 +41,6 @@ namespace PusulaCCProject.WebUI.Controllers
                 {
                     string stringAccessToken = JsonConvert.SerializeObject(responseModel.response.accessToken);
                     HttpContext.Session.SetString("token", stringAccessToken);
-                    var strmtr = HttpContext.Session.GetString("token");
                     return Json(new { isSuccess = true });
                 }
                 else                
